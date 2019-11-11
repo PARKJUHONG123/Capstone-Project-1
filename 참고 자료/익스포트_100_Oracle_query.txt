@@ -1,0 +1,10 @@
+select uipath.* 
+from uipath, (select *
+            from( select pname, count(pname) as pname_count
+                    from uipath
+                    group by pname
+                    order by pname_count desc
+                )
+            where rownum <= 100
+        ) subquery
+where uipath.pname = subquery.pname;
